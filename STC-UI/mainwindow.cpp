@@ -66,7 +66,7 @@ std::vector<int> MainWindow::quicksort(std::vector<int> list_){
 void * MainWindow::mergesort(void * index){
     int k = *((int *)index);
 
-    if(sortGroup[k].size() == 0){
+    if(sortGroup[k].size() < 2){
         return index;
     }
 
@@ -87,14 +87,14 @@ void * MainWindow::mergesort(void * index){
         sortGroup[k].erase(sortGroup[k].begin());
     }
 
-/*
+
     int threadNum = 2;
     pthread_t threads[threadNum];
     pthread_create(&threads[0], NULL, &MainWindow::mergesort, &lefti);
     pthread_create(&threads[1], NULL, &MainWindow::mergesort, &righti);
     pthread_join(threads[0], NULL);
     pthread_join(threads[1], NULL);
-    */
+
 
 
     while(!(sortGroup[lefti].size() == 0 && sortGroup[righti].size() == 0)){
