@@ -58,9 +58,7 @@ std::vector<int> MainWindow::quicksort(std::vector<int> list_){
 
 
 typedef void * (*THREADFUNCPTR)(void *);
-
-
-
+std::vector<std::vector<int>> MainWindow::sortGroup;
 
 
 void * MainWindow::mergesort(void * list_thread_pointer){
@@ -82,14 +80,6 @@ void * MainWindow::mergesort(void * list_thread_pointer){
         list_.erase(list_.begin());
     }
 
-    /*
-    int threadNum = 2;
-    pthread_t threads[threadNum];
-    pthread_create(&threads[0], NULL, mergesort, &left);
-    pthread_create(&threads[1], NULL, mergesort, &right);
-    pthread_join(threads[0], NULL);
-    pthread_join(threads[1], NULL);
-    */
     //left = mergesort(left);
     //right = mergesort(right);
 
@@ -117,17 +107,16 @@ void * MainWindow::mergesort(void * list_thread_pointer){
     }
 
     for(int i = 0; i < list_.size(); i++){
-        std::cout << list_[i] << std::endl;
+        //std::cout << list_[i] << std::endl;
     }
-
-    return list_thread_pointer;
+    sortGroup.push_back(list_);
+    return (void *)&list_;
 }
 
 void MainWindow::on_enterButton_clicked()
 {
     QString qstr = ui->listInput->toPlainText();
     std::string str = qstr.toStdString();
-    ui->label->setText(qstr);
     std::vector<std::string> strs;
     std::string empty = "";
     strs.push_back(empty);
@@ -148,17 +137,17 @@ void MainWindow::on_enterButton_clicked()
         list.push_back(temp);
     }
 
-
-    std::vector<int> * mergeSortedList;
+    std::vector<int> mergeSortList = list;
+    sortGroup.push_back(list);
     int threadNum = 2;
     pthread_t threads[threadNum];
-    pthread_create(&threads[0], NULL, mergesort, &list);
+    pthread_create(&threads[0], NULL, &MainWindow::mergesort, &mergeSortList);
     pthread_join(threads[0], NULL);
 
     std::vector<int> quickSortedList = quicksort(list);
     //std::vector<int> mergeSortedList = mergesort(list);
-    for(int i = 0; i < list.size(); i++){
-        //std::cout << list[i] << std::endl;
+    for(int i = 0; i < sortGroup[1].size(); i++){
+        std::cout << sortGroup[1][i] << std::endl;
     }
 }
 

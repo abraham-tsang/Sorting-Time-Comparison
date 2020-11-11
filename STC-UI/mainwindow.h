@@ -25,6 +25,7 @@ private:
 
     Ui::MainWindow *ui;
     std::vector<int> list;
+    static std::vector<std::vector<int>> sortGroup;
 };
 
 #endif // MAINWINDOW_H
