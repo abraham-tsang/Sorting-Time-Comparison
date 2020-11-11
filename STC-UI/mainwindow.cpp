@@ -7,6 +7,9 @@
 #include <sstream>
 #include <pthread.h>
 
+typedef void * (*THREADFUNCPTR)(void *);
+std::vector<std::vector<int>> MainWindow::sortGroup;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -57,60 +60,71 @@ std::vector<int> MainWindow::quicksort(std::vector<int> list_){
 
 
 
-typedef void * (*THREADFUNCPTR)(void *);
-std::vector<std::vector<int>> MainWindow::sortGroup;
 
+//Have to add endl to threads!!!!
 
-void * MainWindow::mergesort(void * list_thread_pointer){
-    std::vector<int> list_ = *((std::vector<int> *)list_thread_pointer);
-    if(list_.size() < 2){
-        return list_thread_pointer;
+void * MainWindow::mergesort(void * index){
+    int k = *((int *)index);
+
+    if(sortGroup[k].size() == 0){
+        return index;
     }
 
-    std::vector<int> left;
-    std::vector<int> right;
-    int half = list_.size()/2;
+    std::vector<int> temp;
+    int lefti = sortGroup.size();
+    sortGroup.push_back(temp);
+    int righti = sortGroup.size();
+    sortGroup.push_back(temp);
+
+    int half = sortGroup[k].size()/2;
     while(half > 0){
-        left.push_back(list_[0]);
-        list_.erase(list_.begin());
+        sortGroup[lefti].push_back(sortGroup[k][0]);
+        sortGroup[k].erase(sortGroup[k].begin());
         half--;
     }
-    while(list_.size() > 0){
-        right.push_back(list_[0]);
-        list_.erase(list_.begin());
+    while(sortGroup[k].size() > 0){
+        sortGroup[righti].push_back(sortGroup[k][0]);
+        sortGroup[k].erase(sortGroup[k].begin());
     }
 
-    //left = mergesort(left);
-    //right = mergesort(right);
+/*
+    int threadNum = 2;
+    pthread_t threads[threadNum];
+    pthread_create(&threads[0], NULL, &MainWindow::mergesort, &lefti);
+    pthread_create(&threads[1], NULL, &MainWindow::mergesort, &righti);
+    pthread_join(threads[0], NULL);
+    pthread_join(threads[1], NULL);
+    */
 
-    while(!(left.size() == 0 && right.size() == 0)){
-        if(left.size() == 0){
-            while(right.size() > 0){
-                list_.push_back(right[0]);
-                right.erase(right.begin());
+
+    while(!(sortGroup[lefti].size() == 0 && sortGroup[righti].size() == 0)){
+        if(sortGroup[lefti].size() == 0){
+            while(sortGroup[righti].size() > 0){
+                sortGroup[k].push_back(sortGroup[righti][0]);
+                sortGroup[righti].erase(sortGroup[righti].begin());
             }
         }
-        else if(right.size() == 0){
-            while(left.size() > 0){
-                list_.push_back(left[0]);
-                left.erase(left.begin());
+        else if(sortGroup[righti].size() == 0){
+            while(sortGroup[lefti].size() > 0){
+                sortGroup[k].push_back(sortGroup[lefti][0]);
+                sortGroup[lefti].erase(sortGroup[lefti].begin());
             }
         }
-        else if(left[0] < right[0]){
-            list_.push_back(left[0]);
-            left.erase(left.begin());
+        else if(sortGroup[lefti][0] < sortGroup[righti][0]){
+            sortGroup[k].push_back(sortGroup[lefti][0]);
+            sortGroup[lefti].erase(sortGroup[lefti].begin());
         }
         else{
-            list_.push_back(right[0]);
-            right.erase(right.begin());
+            sortGroup[k].push_back(sortGroup[righti][0]);
+            sortGroup[righti].erase(sortGroup[righti].begin());
         }
     }
-
-    for(int i = 0; i < list_.size(); i++){
-        //std::cout << list_[i] << std::endl;
+    for(int i = 0; i < sortGroup[k].size(); i++){
+        std::cout << sortGroup[k][i] << " ";
     }
-    sortGroup.push_back(list_);
-    return (void *)&list_;
+    std::cout << std::endl;
+
+    return index;
 }
 
 void MainWindow::on_enterButton_clicked()
@@ -137,17 +151,18 @@ void MainWindow::on_enterButton_clicked()
         list.push_back(temp);
     }
 
-    std::vector<int> mergeSortList = list;
     sortGroup.push_back(list);
+
+    int index = 0;
     int threadNum = 2;
     pthread_t threads[threadNum];
-    pthread_create(&threads[0], NULL, &MainWindow::mergesort, &mergeSortList);
+    pthread_create(&threads[0], NULL, &MainWindow::mergesort, &index);
     pthread_join(threads[0], NULL);
 
     std::vector<int> quickSortedList = quicksort(list);
     //std::vector<int> mergeSortedList = mergesort(list);
-    for(int i = 0; i < sortGroup[1].size(); i++){
-        std::cout << sortGroup[1][i] << std::endl;
+    for(int i = 0; i < sortGroup[0].size(); i++){
+        //std::cout << sortGroup[0][i] << std::endl;
     }
 }
 
