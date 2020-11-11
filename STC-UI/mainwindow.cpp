@@ -54,26 +54,44 @@ std::vector<int> MainWindow::quicksort(std::vector<int> list_){
     return list_;
 }
 
-std::vector<int> MainWindow::mergesort(std::vector<int> list_){
+
+
+
+typedef void * (*THREADFUNCPTR)(void *);
+
+
+
+
+
+void * MainWindow::mergesort(void * list_thread_pointer){
+    std::vector<int> list_ = *((std::vector<int> *)list_thread_pointer);
     if(list_.size() < 2){
-        return list_;
+        return list_thread_pointer;
     }
+
     std::vector<int> left;
     std::vector<int> right;
     int half = list_.size()/2;
-    int i = 0;
-    while(i < half){
-        left.push_back(list_[i]);
+    while(half > 0){
+        left.push_back(list_[0]);
         list_.erase(list_.begin());
         half--;
     }
-    while(i < list_.size()){
-        right.push_back(list_[i]);
+    while(list_.size() > 0){
+        right.push_back(list_[0]);
         list_.erase(list_.begin());
     }
 
-    left = mergesort(left);
-    right = mergesort(right);
+    /*
+    int threadNum = 2;
+    pthread_t threads[threadNum];
+    pthread_create(&threads[0], NULL, mergesort, &left);
+    pthread_create(&threads[1], NULL, mergesort, &right);
+    pthread_join(threads[0], NULL);
+    pthread_join(threads[1], NULL);
+    */
+    //left = mergesort(left);
+    //right = mergesort(right);
 
     while(!(left.size() == 0 && right.size() == 0)){
         if(left.size() == 0){
@@ -98,7 +116,11 @@ std::vector<int> MainWindow::mergesort(std::vector<int> list_){
         }
     }
 
-    return list_;
+    for(int i = 0; i < list_.size(); i++){
+        std::cout << list_[i] << std::endl;
+    }
+
+    return list_thread_pointer;
 }
 
 void MainWindow::on_enterButton_clicked()
@@ -126,10 +148,17 @@ void MainWindow::on_enterButton_clicked()
         list.push_back(temp);
     }
 
+
+    std::vector<int> * mergeSortedList;
+    int threadNum = 2;
+    pthread_t threads[threadNum];
+    pthread_create(&threads[0], NULL, mergesort, &list);
+    pthread_join(threads[0], NULL);
+
     std::vector<int> quickSortedList = quicksort(list);
-    std::vector<int> mergeSortedList = mergesort(list);
-    for(int i = 0; i < quickSortedList.size(); i++){
-        std::cout << quickSortedList[i] << std::endl;
+    //std::vector<int> mergeSortedList = mergesort(list);
+    for(int i = 0; i < list.size(); i++){
+        //std::cout << list[i] << std::endl;
     }
 }
 
