@@ -61,6 +61,57 @@ std::vector<int> MainWindow::quicksort(std::vector<int> list_){
     return list_;
 }
 
+std::vector<int> MainWindow::mergesort(std::vector<int> list_){
+    if(list_.size() < 2){
+        return list_;
+    }
+    std::vector<int> left;
+    std::vector<int> right;
+    int half = list_.size()/2;
+    for(int i = 0; i < half; i++){
+        left.push_back(list_[i]);
+    }
+    for(int i = half; i < list_.size(); i++){
+        right.push_back(list_[i]);
+    }
+    left = mergesort(left);
+    right = mergesort(right);
+    int lefti = 0;
+    int righti = 0;
+
+    for(int i = 0; i < list_.size(); i++){
+        if(left.size() == lefti && right.size() == righti){
+            break;
+        }
+        else if(left.size() == lefti){
+            while(righti < right.size()){
+                list_[i] = right[righti];
+                righti++;
+                i++;
+            }
+            break;
+        }
+        else if(right.size() == righti){
+            while(lefti < left.size()){
+                list_[i] = left[lefti];
+                lefti++;
+                i++;
+            }
+            break;
+        }
+        else if(left[lefti] < right[righti]){
+            list_[i] = left[lefti];
+            lefti++;
+        }
+        else{
+            list_[i] = right[righti];
+            righti++;
+        }
+    }
+
+    return list_;
+}
+
 void MainWindow::on_enterButton_clicked()
 {
     QString qstr = ui->listInput->toPlainText();
@@ -85,7 +136,9 @@ void MainWindow::on_enterButton_clicked()
         ss >> temp;
         list.push_back(temp);
     }
-    list = quicksort(list);
+
+    //list = quicksort(list);
+    list = mergesort(list);
     for(int i = 0; i < list.size(); i++){
         std::cout << list[i] << std::endl;
     }
