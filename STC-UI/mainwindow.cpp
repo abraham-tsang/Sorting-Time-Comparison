@@ -27,7 +27,8 @@ void MainWindow::on_enterButton_clicked()
     std::vector<std::string> strs;
     std::string empty = "";
     strs.push_back(empty);
-    for(int i = 0; i < str.size(); i++){
+    unsigned long long str_size = str.size();
+    for(unsigned long long i = 0; i < str_size; i++){
         if(str[i] == ' '){
             strs.push_back(empty);
         }
@@ -36,10 +37,10 @@ void MainWindow::on_enterButton_clicked()
         }
     }
     int temp = 0;
-    for(int i = 0; i < strs.size(); i++){
+    unsigned long long strs_size = strs.size();
+    for(unsigned long long i = 0; i < strs_size; i++){
         std::stringstream ss(strs[i]);
         ss >> temp;
         list.push_back(temp);
-        //std::cout << list[i] << std::endl;
     }
 }
