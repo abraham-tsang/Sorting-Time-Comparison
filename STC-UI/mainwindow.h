@@ -13,8 +13,8 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-    std::vector<int> quicksort(std::vector<int> list_);
-    static void * mergesort(void * list_thread_pointer);
+    static void * quicksort(void * index);
+    static void * mergesort(void * index);
     void test();
     ~MainWindow();
 
@@ -25,7 +25,8 @@ private:
 
     Ui::MainWindow *ui;
     std::vector<int> list;
-    static std::vector<std::vector<int>> sortGroup;
+    static std::vector<std::vector<int>> mergeSortGroup;
+    static std::vector<std::vector<int>> quickSortGroup;
 };
 
 #endif // MAINWINDOW_H

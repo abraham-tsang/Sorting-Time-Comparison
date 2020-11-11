@@ -8,7 +8,8 @@
 #include <pthread.h>
 
 typedef void * (*THREADFUNCPTR)(void *);
-std::vector<std::vector<int>> MainWindow::sortGroup;
+std::vector<std::vector<int>> MainWindow::quickSortGroup;
+std::vector<std::vector<int>> MainWindow::mergeSortGroup;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,38 +24,52 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-std::vector<int> MainWindow::quicksort(std::vector<int> list_){
-    if(list_.size() < 2){
-        return list_;
+void * MainWindow::quicksort(void * index){
+    int k = *((int *)index);
+
+    if(quickSortGroup[k].size() < 2){
+        return index;
     }
-    int pivot = list_[0];
-    std::vector<int> left;
-    std::vector<int> right;
-    for(int i = 1; i < list_.size(); i++){
-        if(list_[i] < pivot){
-            left.push_back(list_[i]);
+
+    int pivot = quickSortGroup[k][0];
+    std::vector<int> temp;
+    int lefti = quickSortGroup.size();
+    quickSortGroup.push_back(temp);
+    int righti = quickSortGroup.size();
+    quickSortGroup.push_back(temp);
+    for(int i = 1; i < quickSortGroup[k].size(); i++){
+        if(quickSortGroup[k][i] < pivot){
+            quickSortGroup[lefti].push_back(quickSortGroup[k][i]);
         }
         else{
-            right.push_back(list_[i]);
+            quickSortGroup[righti].push_back(quickSortGroup[k][i]);
         }
-        list_.erase(list_.begin()+i);
+        quickSortGroup[k].erase(quickSortGroup[k].begin()+i);
         i--;
     }
-    list_.erase(list_.begin());
-    left = quicksort(left);
-    right = quicksort(right);
+    quickSortGroup[k].erase(quickSortGroup[k].begin());
+
+    int threadNum = 2;
+    pthread_t threads[threadNum];
+    pthread_create(&threads[0], NULL, &MainWindow::quicksort, &lefti);
+    pthread_create(&threads[1], NULL, &MainWindow::quicksort, &righti);
+    pthread_join(threads[0], NULL);
+    pthread_join(threads[1], NULL);
+
     int i = 0;
-    while(i < left.size()){
-        list_.push_back(left[i]);
+    while(i < quickSortGroup[lefti].size()){
+        quickSortGroup[k].push_back(quickSortGroup[lefti][i]);
         i++;
     }
-    list_.push_back(pivot);
+    quickSortGroup[k].push_back(pivot);
     i = 0;
-    while(i < right.size()){
-        list_.push_back(right[i]);
+
+    while(i < quickSortGroup[righti].size()){
+        quickSortGroup[k].push_back(quickSortGroup[righti][i]);
         i++;
     }
-    return list_;
+
+    return index;
 }
 
 
@@ -66,25 +81,25 @@ std::vector<int> MainWindow::quicksort(std::vector<int> list_){
 void * MainWindow::mergesort(void * index){
     int k = *((int *)index);
 
-    if(sortGroup[k].size() < 2){
+    if(mergeSortGroup[k].size() < 2){
         return index;
     }
 
     std::vector<int> temp;
-    int lefti = sortGroup.size();
-    sortGroup.push_back(temp);
-    int righti = sortGroup.size();
-    sortGroup.push_back(temp);
+    int lefti = mergeSortGroup.size();
+    mergeSortGroup.push_back(temp);
+    int righti = mergeSortGroup.size();
+    mergeSortGroup.push_back(temp);
 
-    int half = sortGroup[k].size()/2;
+    int half = mergeSortGroup[k].size()/2;
     while(half > 0){
-        sortGroup[lefti].push_back(sortGroup[k][0]);
-        sortGroup[k].erase(sortGroup[k].begin());
+        mergeSortGroup[lefti].push_back(mergeSortGroup[k][0]);
+        mergeSortGroup[k].erase(mergeSortGroup[k].begin());
         half--;
     }
-    while(sortGroup[k].size() > 0){
-        sortGroup[righti].push_back(sortGroup[k][0]);
-        sortGroup[k].erase(sortGroup[k].begin());
+    while(mergeSortGroup[k].size() > 0){
+        mergeSortGroup[righti].push_back(mergeSortGroup[k][0]);
+        mergeSortGroup[k].erase(mergeSortGroup[k].begin());
     }
 
 
@@ -97,32 +112,32 @@ void * MainWindow::mergesort(void * index){
 
 
 
-    while(!(sortGroup[lefti].size() == 0 && sortGroup[righti].size() == 0)){
-        if(sortGroup[lefti].size() == 0){
-            while(sortGroup[righti].size() > 0){
-                sortGroup[k].push_back(sortGroup[righti][0]);
-                sortGroup[righti].erase(sortGroup[righti].begin());
+    while(!(mergeSortGroup[lefti].size() == 0 && mergeSortGroup[righti].size() == 0)){
+        if(mergeSortGroup[lefti].size() == 0){
+            while(mergeSortGroup[righti].size() > 0){
+                mergeSortGroup[k].push_back(mergeSortGroup[righti][0]);
+                mergeSortGroup[righti].erase(mergeSortGroup[righti].begin());
             }
         }
-        else if(sortGroup[righti].size() == 0){
-            while(sortGroup[lefti].size() > 0){
-                sortGroup[k].push_back(sortGroup[lefti][0]);
-                sortGroup[lefti].erase(sortGroup[lefti].begin());
+        else if(mergeSortGroup[righti].size() == 0){
+            while(mergeSortGroup[lefti].size() > 0){
+                mergeSortGroup[k].push_back(mergeSortGroup[lefti][0]);
+                mergeSortGroup[lefti].erase(mergeSortGroup[lefti].begin());
             }
         }
-        else if(sortGroup[lefti][0] < sortGroup[righti][0]){
-            sortGroup[k].push_back(sortGroup[lefti][0]);
-            sortGroup[lefti].erase(sortGroup[lefti].begin());
+        else if(mergeSortGroup[lefti][0] < mergeSortGroup[righti][0]){
+            mergeSortGroup[k].push_back(mergeSortGroup[lefti][0]);
+            mergeSortGroup[lefti].erase(mergeSortGroup[lefti].begin());
         }
         else{
-            sortGroup[k].push_back(sortGroup[righti][0]);
-            sortGroup[righti].erase(sortGroup[righti].begin());
+            mergeSortGroup[k].push_back(mergeSortGroup[righti][0]);
+            mergeSortGroup[righti].erase(mergeSortGroup[righti].begin());
         }
     }
-    for(int i = 0; i < sortGroup[k].size(); i++){
-        std::cout << sortGroup[k][i] << " ";
+    /*for(int i = 0; i < mergeSortGroup[k].size(); i++){
+        std::cout << mergeSortGroup[k][i] << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl;*/
 
     return index;
 }
@@ -151,19 +166,22 @@ void MainWindow::on_enterButton_clicked()
         list.push_back(temp);
     }
 
-    sortGroup.push_back(list);
-
+    mergeSortGroup.push_back(list);
+    quickSortGroup.push_back(list);
     int index = 0;
     int threadNum = 2;
     pthread_t threads[threadNum];
     pthread_create(&threads[0], NULL, &MainWindow::mergesort, &index);
+    pthread_create(&threads[1], NULL, &MainWindow::quicksort, &index);
     pthread_join(threads[0], NULL);
+    pthread_join(threads[1], NULL);
 
-    std::vector<int> quickSortedList = quicksort(list);
+    //std::vector<int> quickSortedList = quicksort(list);
     //std::vector<int> mergeSortedList = mergesort(list);
-    for(int i = 0; i < sortGroup[0].size(); i++){
-        //std::cout << sortGroup[0][i] << std::endl;
+    for(int i = 0; i < quickSortGroup[0].size(); i++){
+        std::cout << quickSortGroup[0][i] << " ";
     }
+    std::cout << std::endl;
 }
 
 
