@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="listInputLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -27,40 +27,118 @@
      <string>Give a list of numbers (seperated with whitespaces): </string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="mergeSortLabel">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>190</y>
+      <x>130</x>
+      <y>80</y>
       <width>121</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Merge Sort Algorithm: </string>
+     <string>Merge Sort</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="quickSortLabel">
     <property name="geometry">
      <rect>
       <x>490</x>
-      <y>200</y>
+      <y>80</y>
       <width>111</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Quick Sort Algorithm: </string>
+     <string>Quick Sort</string>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEdit">
+   <widget class="QTextEdit" name="listInput">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>280</x>
       <y>20</y>
-      <width>104</width>
+      <width>271</width>
       <height>31</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mergeSortedListLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>120</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sorted list: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="quickSortedListLabel">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>140</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Sorted list: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mergeTimeUsedLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>160</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time used: </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="quickTimeUsedLabel">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>170</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Time used: </string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="enterButton">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>20</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Enter</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>240</y>
+      <width>47</width>
+      <height>13</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
     </property>
    </widget>
   </widget>

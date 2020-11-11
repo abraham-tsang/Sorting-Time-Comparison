@@ -14,6 +14,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
@@ -25,10 +26,16 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
+    QLabel *listInputLabel;
+    QLabel *mergeSortLabel;
+    QLabel *quickSortLabel;
+    QTextEdit *listInput;
+    QLabel *mergeSortedListLabel;
+    QLabel *quickSortedListLabel;
+    QLabel *mergeTimeUsedLabel;
+    QLabel *quickTimeUsedLabel;
+    QPushButton *enterButton;
     QLabel *label;
-    QLabel *label_2;
-    QLabel *label_3;
-    QTextEdit *textEdit;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -40,18 +47,36 @@ public:
         MainWindow->resize(730, 526);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        listInputLabel = new QLabel(centralWidget);
+        listInputLabel->setObjectName(QString::fromUtf8("listInputLabel"));
+        listInputLabel->setGeometry(QRect(10, 30, 251, 16));
+        mergeSortLabel = new QLabel(centralWidget);
+        mergeSortLabel->setObjectName(QString::fromUtf8("mergeSortLabel"));
+        mergeSortLabel->setGeometry(QRect(130, 80, 121, 16));
+        quickSortLabel = new QLabel(centralWidget);
+        quickSortLabel->setObjectName(QString::fromUtf8("quickSortLabel"));
+        quickSortLabel->setGeometry(QRect(490, 80, 111, 16));
+        listInput = new QTextEdit(centralWidget);
+        listInput->setObjectName(QString::fromUtf8("listInput"));
+        listInput->setGeometry(QRect(280, 20, 271, 31));
+        mergeSortedListLabel = new QLabel(centralWidget);
+        mergeSortedListLabel->setObjectName(QString::fromUtf8("mergeSortedListLabel"));
+        mergeSortedListLabel->setGeometry(QRect(30, 120, 91, 16));
+        quickSortedListLabel = new QLabel(centralWidget);
+        quickSortedListLabel->setObjectName(QString::fromUtf8("quickSortedListLabel"));
+        quickSortedListLabel->setGeometry(QRect(370, 140, 81, 16));
+        mergeTimeUsedLabel = new QLabel(centralWidget);
+        mergeTimeUsedLabel->setObjectName(QString::fromUtf8("mergeTimeUsedLabel"));
+        mergeTimeUsedLabel->setGeometry(QRect(30, 160, 81, 16));
+        quickTimeUsedLabel = new QLabel(centralWidget);
+        quickTimeUsedLabel->setObjectName(QString::fromUtf8("quickTimeUsedLabel"));
+        quickTimeUsedLabel->setGeometry(QRect(370, 170, 61, 16));
+        enterButton = new QPushButton(centralWidget);
+        enterButton->setObjectName(QString::fromUtf8("enterButton"));
+        enterButton->setGeometry(QRect(570, 20, 75, 23));
         label = new QLabel(centralWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(10, 30, 251, 16));
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(80, 120, 121, 16));
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(210, 120, 111, 16));
-        textEdit = new QTextEdit(centralWidget);
-        textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(270, 20, 104, 31));
+        label->setGeometry(QRect(240, 240, 47, 13));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -72,9 +97,15 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        label->setText(QApplication::translate("MainWindow", "Give a list of numbers (seperated with whitespaces): ", nullptr));
-        label_2->setText(QApplication::translate("MainWindow", "Merge Sort Algorithm: ", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Quick Sort Algorithm: ", nullptr));
+        listInputLabel->setText(QApplication::translate("MainWindow", "Give a list of numbers (seperated with whitespaces): ", nullptr));
+        mergeSortLabel->setText(QApplication::translate("MainWindow", "Merge Sort", nullptr));
+        quickSortLabel->setText(QApplication::translate("MainWindow", "Quick Sort", nullptr));
+        mergeSortedListLabel->setText(QApplication::translate("MainWindow", "Sorted list: ", nullptr));
+        quickSortedListLabel->setText(QApplication::translate("MainWindow", "Sorted list: ", nullptr));
+        mergeTimeUsedLabel->setText(QApplication::translate("MainWindow", "Time used: ", nullptr));
+        quickTimeUsedLabel->setText(QApplication::translate("MainWindow", "Time used: ", nullptr));
+        enterButton->setText(QApplication::translate("MainWindow", "Enter", nullptr));
+        label->setText(QApplication::translate("MainWindow", "TextLabel", nullptr));
     } // retranslateUi
 
 };
