@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <pthread.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,39 +25,31 @@ std::vector<int> MainWindow::quicksort(std::vector<int> list_){
         return list_;
     }
     int pivot = list_[0];
-    for(int i = 1; i < list_.size(); i++){
-        if(list_[i] < pivot){
-            list_.insert(list_.begin(), list_[i]);
-            list_.erase(list_.begin()+i+1);
-        }
-    }
     std::vector<int> left;
     std::vector<int> right;
-    int pivoti;
-    for(int i = 0; i < list_.size(); i++){
-        if(list_[i] != pivot){
+    for(int i = 1; i < list_.size(); i++){
+        if(list_[i] < pivot){
             left.push_back(list_[i]);
         }
         else{
-            pivoti = i;
-            break;
+            right.push_back(list_[i]);
         }
+        list_.erase(list_.begin()+i);
+        i--;
     }
-    for(int i = pivoti+1; i < list_.size(); i++){
-        right.push_back(list_[i]);
-    }
+    list_.erase(list_.begin());
     left = quicksort(left);
     right = quicksort(right);
-    for(int i = 0; i < list_.size(); i++){
-        if(i < pivoti){
-            list_[i] = left[i];
-        }
-        else if(i == pivoti){
-            list_[i] = pivot;
-        }
-        else if(i > pivoti){
-            list_[i] = right[i-pivoti];
-        }
+    int i = 0;
+    while(i < left.size()){
+        list_.push_back(left[i]);
+        i++;
+    }
+    list_.push_back(pivot);
+    i = 0;
+    while(i < right.size()){
+        list_.push_back(right[i]);
+        i++;
     }
     return list_;
 }
@@ -137,10 +130,10 @@ void MainWindow::on_enterButton_clicked()
         list.push_back(temp);
     }
 
-    //list = quicksort(list);
-    list = mergesort(list);
-    for(int i = 0; i < list.size(); i++){
-        std::cout << list[i] << std::endl;
+    std::vector<int> quickSortedList = quicksort(list);
+    std::vector<int> mergeSortedList = mergesort(list);
+    for(int i = 0; i < quickSortedList.size(); i++){
+        std::cout << quickSortedList[i] << std::endl;
     }
 }
 

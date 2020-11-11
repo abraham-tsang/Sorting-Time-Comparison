@@ -76,7 +76,7 @@ public:
         enterButton->setGeometry(QRect(570, 20, 75, 23));
         label = new QLabel(centralWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(240, 240, 47, 13));
+        label->setGeometry(QRect(240, 240, 271, 16));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
