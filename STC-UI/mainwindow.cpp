@@ -61,44 +61,40 @@ std::vector<int> MainWindow::mergesort(std::vector<int> list_){
     std::vector<int> left;
     std::vector<int> right;
     int half = list_.size()/2;
-    for(int i = 0; i < half; i++){
+    int i = 0;
+    while(i < half){
         left.push_back(list_[i]);
+        list_.erase(list_.begin());
+        half--;
     }
-    for(int i = half; i < list_.size(); i++){
+    while(i < list_.size()){
         right.push_back(list_[i]);
+        list_.erase(list_.begin());
     }
+
     left = mergesort(left);
     right = mergesort(right);
-    int lefti = 0;
-    int righti = 0;
 
-    for(int i = 0; i < list_.size(); i++){
-        if(left.size() == lefti && right.size() == righti){
-            break;
-        }
-        else if(left.size() == lefti){
-            while(righti < right.size()){
-                list_[i] = right[righti];
-                righti++;
-                i++;
+    while(!(left.size() == 0 && right.size() == 0)){
+        if(left.size() == 0){
+            while(right.size() > 0){
+                list_.push_back(right[0]);
+                right.erase(right.begin());
             }
-            break;
         }
-        else if(right.size() == righti){
-            while(lefti < left.size()){
-                list_[i] = left[lefti];
-                lefti++;
-                i++;
+        else if(right.size() == 0){
+            while(left.size() > 0){
+                list_.push_back(left[0]);
+                left.erase(left.begin());
             }
-            break;
         }
-        else if(left[lefti] < right[righti]){
-            list_[i] = left[lefti];
-            lefti++;
+        else if(left[0] < right[0]){
+            list_.push_back(left[0]);
+            left.erase(left.begin());
         }
         else{
-            list_[i] = right[righti];
-            righti++;
+            list_.push_back(right[0]);
+            right.erase(right.begin());
         }
     }
 
