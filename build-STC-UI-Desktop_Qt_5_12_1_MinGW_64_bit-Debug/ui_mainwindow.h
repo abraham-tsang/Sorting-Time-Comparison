@@ -11,9 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
 
@@ -22,25 +24,42 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
+    QWidget *centralWidget;
+    QLabel *label;
+    QLabel *label_2;
+    QLabel *label_3;
+    QTextEdit *textEdit;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
-    QWidget *centralWidget;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(400, 300);
+        MainWindow->resize(730, 526);
+        centralWidget = new QWidget(MainWindow);
+        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(10, 30, 251, 16));
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(80, 120, 121, 16));
+        label_3 = new QLabel(centralWidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(210, 120, 111, 16));
+        textEdit = new QTextEdit(centralWidget);
+        textEdit->setObjectName(QString::fromUtf8("textEdit"));
+        textEdit->setGeometry(QRect(270, 20, 104, 31));
+        MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
+        menuBar->setGeometry(QRect(0, 0, 730, 21));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        MainWindow->addToolBar(mainToolBar);
-        centralWidget = new QWidget(MainWindow);
-        centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        MainWindow->setCentralWidget(centralWidget);
+        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -53,6 +72,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
+        label->setText(QApplication::translate("MainWindow", "Give a list of numbers (seperated with whitespaces): ", nullptr));
+        label_2->setText(QApplication::translate("MainWindow", "Merge Sort Algorithm: ", nullptr));
+        label_3->setText(QApplication::translate("MainWindow", "Quick Sort Algorithm: ", nullptr));
     } // retranslateUi
 
 };
