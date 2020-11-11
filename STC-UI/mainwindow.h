@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
+#include <vector>
 namespace Ui {
 class MainWindow;
 }
@@ -20,6 +20,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    std::vector<int> list;
 };
 
 #endif // MAINWINDOW_H
