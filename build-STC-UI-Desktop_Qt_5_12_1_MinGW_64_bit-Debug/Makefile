@@ -248,6 +248,7 @@ Makefile: ../STC-UI/STC-UI.pro C:/Qt/5.12.1/mingw73_64/mkspecs/win32-g++/qmake.c
 		../STC-UI/STC-UI.pro \
 		C:/Qt/5.12.1/mingw73_64/lib/Qt5Widgets.prl \
 		C:/Qt/5.12.1/mingw73_64/lib/Qt5Gui.prl \
+		C:/Qt/5.12.1/mingw73_64/lib/Qt5Network.prl \
 		C:/Qt/5.12.1/mingw73_64/lib/Qt5Core.prl \
 		C:/Qt/5.12.1/mingw73_64/lib/qtmaind.prl
 	$(QMAKE) -o Makefile ..\STC-UI\STC-UI.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -436,6 +437,7 @@ C:/Qt/5.12.1/mingw73_64/mkspecs/features/lex.prf:
 ../STC-UI/STC-UI.pro:
 C:/Qt/5.12.1/mingw73_64/lib/Qt5Widgets.prl:
 C:/Qt/5.12.1/mingw73_64/lib/Qt5Gui.prl:
+C:/Qt/5.12.1/mingw73_64/lib/Qt5Network.prl:
 C:/Qt/5.12.1/mingw73_64/lib/Qt5Core.prl:
 C:/Qt/5.12.1/mingw73_64/lib/qtmaind.prl:
 qmake: FORCE

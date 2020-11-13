@@ -6,7 +6,12 @@
 #include <vector>
 #include <sstream>
 #include <pthread.h>
-#include <curl/curl.h>
+
+#include <QObject>
+#include <QtCore>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QJsonDocument>
 
 
 //Have to add endl to threads with Qt!!!!
@@ -19,6 +24,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    manager = new QNetworkAccessManager();
+    QObject::connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(gettime(QNetworkReply*)));
+    request.setUrl(QUrl("http://worldclockapi.com/api/json/est/now"));
 
 }
 
@@ -132,12 +141,19 @@ void * MainWindow::mergesort(void * index){
             mergeSortGroup[righti].erase(mergeSortGroup[righti].begin());
         }
     }
-    /*for(int i = 0; i < mergeSortGroup[k].size(); i++){
-        std::cout << mergeSortGroup[k][i] << " ";
-    }
-    std::cout << std::endl;*/
 
     return index;
+}
+
+void MainWindow::gettime(QNetworkReply * reply){
+    if (reply->error()) {
+        qDebug() << reply->errorString();
+        return;
+    }
+    QString answer = reply->readAll();
+    std::string time = answer.toStdString();
+    time = time.substr(189, 18);
+    std::cout << time << std::endl;
 }
 
 void MainWindow::on_enterButton_clicked()
@@ -174,22 +190,8 @@ void MainWindow::on_enterButton_clicked()
     pthread_join(threads[0], NULL);
     pthread_join(threads[1], NULL);
 
+    manager->get(request);
 
-    CURL * curl;
-    CURLcode res;
-    std::string readBuffer;
-    //curl_global_init(CURL_GLOBAL_ALL);
-    //curl = curl_easy_init();
-    /*if(curl){
-        curl_easy_setopt(curl, CURLOPT_URL, "http://worldclockapi.com/api/json/est/now");
-        res = curl_easy_perform(curl);
-        curl_easy_cleanup(curl);
-        std::cout << readBuffer << std::endl;
-    }*/
-
-    for(int i = 0; i < quickSortGroup[0].size(); i++){
-        std::cout << quickSortGroup[0][i] << " ";
-    }
     std::cout << std::endl;
 }
 

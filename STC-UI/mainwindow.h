@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 #include <vector>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+
 namespace Ui {
 class MainWindow;
 }
@@ -15,11 +18,14 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     static void * quicksort(void * index);
     static void * mergesort(void * index);
+
     void test();
     ~MainWindow();
 
 private slots:
     void on_enterButton_clicked();
+
+    void gettime(QNetworkReply * reply);
 
 private:
 
@@ -27,6 +33,10 @@ private:
     std::vector<int> list;
     static std::vector<std::vector<int>> mergeSortGroup;
     static std::vector<std::vector<int>> quickSortGroup;
+
+    QNetworkAccessManager *manager;
+    QNetworkRequest request;
+
 };
 
 #endif // MAINWINDOW_H

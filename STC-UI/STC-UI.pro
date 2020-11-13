@@ -34,7 +34,7 @@ HEADERS += \
 FORMS += \
         mainwindow.ui
 
-#LIBS += -LF:/Qt/5.12.1/mingw73_64/lib -lcurl
+QT += network
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
