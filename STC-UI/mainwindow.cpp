@@ -6,7 +6,10 @@
 #include <vector>
 #include <sstream>
 #include <pthread.h>
+#include <curl/curl.h>
 
+
+//Have to add endl to threads with Qt!!!!
 typedef void * (*THREADFUNCPTR)(void *);
 std::vector<std::vector<int>> MainWindow::quickSortGroup;
 std::vector<std::vector<int>> MainWindow::mergeSortGroup;
@@ -72,11 +75,6 @@ void * MainWindow::quicksort(void * index){
     return index;
 }
 
-
-
-
-
-//Have to add endl to threads!!!!
 
 void * MainWindow::mergesort(void * index){
     int k = *((int *)index);
@@ -176,8 +174,19 @@ void MainWindow::on_enterButton_clicked()
     pthread_join(threads[0], NULL);
     pthread_join(threads[1], NULL);
 
-    //std::vector<int> quickSortedList = quicksort(list);
-    //std::vector<int> mergeSortedList = mergesort(list);
+
+    CURL * curl;
+    CURLcode res;
+    std::string readBuffer;
+    //curl_global_init(CURL_GLOBAL_ALL);
+    //curl = curl_easy_init();
+    /*if(curl){
+        curl_easy_setopt(curl, CURLOPT_URL, "http://worldclockapi.com/api/json/est/now");
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+        std::cout << readBuffer << std::endl;
+    }*/
+
     for(int i = 0; i < quickSortGroup[0].size(); i++){
         std::cout << quickSortGroup[0][i] << " ";
     }

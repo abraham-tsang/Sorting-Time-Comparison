@@ -494,7 +494,15 @@ release/mainwindow.o: ../STC-UI/mainwindow.cpp ../STC-UI/mainwindow.h \
 		C:/Qt/5.12.1/mingw73_64/include/QtGui/qpen.h \
 		C:/Qt/5.12.1/mingw73_64/include/QtWidgets/QToolBar \
 		C:/Qt/5.12.1/mingw73_64/include/QtWidgets/qtoolbar.h \
-		C:/Qt/5.12.1/mingw73_64/include/QtWidgets/QWidget
+		C:/Qt/5.12.1/mingw73_64/include/QtWidgets/QWidget \
+		C:/Qt/5.12.1/mingw73_64/include/curl/curl.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/curlver.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/system.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/easy.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/multi.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/urlapi.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/options.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/typecheck-gcc.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\STC-UI\mainwindow.cpp
 
 release/moc_mainwindow.o: release/moc_mainwindow.cpp 
