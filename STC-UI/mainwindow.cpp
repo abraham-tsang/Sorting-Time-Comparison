@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <pthread.h>
+#include <curl/curl.h>
 
 #include <QObject>
 #include <QtCore>
@@ -156,6 +157,12 @@ void MainWindow::gettime(QNetworkReply * reply){
     std::cout << time << std::endl;
 }
 
+static size_t WriteCallback(void *contents, size_t size, size_t nmemb, void *userp)
+{
+    ((std::string*)userp)->append((char*)contents, size * nmemb);
+    return size * nmemb;
+}
+
 void MainWindow::on_enterButton_clicked()
 {
     QString qstr = ui->listInput->toPlainText();
@@ -190,7 +197,28 @@ void MainWindow::on_enterButton_clicked()
     pthread_join(threads[0], NULL);
     pthread_join(threads[1], NULL);
 
-    manager->get(request);
+
+    CURL *curl;
+    CURLcode res;
+    std::string readBuffer;
+    curl_global_init(CURL_GLOBAL_ALL);
+
+    for(int i = 0; i < quickSortGroup[0].size(); i++){
+        std::cout << quickSortGroup[0][i] << " ";
+    }
+/*
+    if(curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, "http://www.google.com");
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+
+        std::cout << readBuffer << std::endl;
+      }
+      */
+    //curl_easy_cleanup(curl);
+    //manager->get(request);
 
     std::cout << std::endl;
 }

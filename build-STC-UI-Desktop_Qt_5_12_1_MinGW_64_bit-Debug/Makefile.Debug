@@ -19,7 +19,7 @@ CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++11 -Wall -W -Wextra -fex
 INCPATH       = -I..\STC-UI -I. -IC:\Qt\5.12.1\mingw73_64\include -IC:\Qt\5.12.1\mingw73_64\include\QtWidgets -IC:\Qt\5.12.1\mingw73_64\include\QtGui -IC:\Qt\5.12.1\mingw73_64\include\QtANGLE -IC:\Qt\5.12.1\mingw73_64\include\QtNetwork -IC:\Qt\5.12.1\mingw73_64\include\QtCore -Idebug -I. -IC:\VulkanSDK\1.0.51.0\include -IC:\Qt\5.12.1\mingw73_64\mkspecs\win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-subsystem,windows -mthreads
-LIBS        =        -LC:\Qt\5.12.1\mingw73_64\lib C:\Qt\5.12.1\mingw73_64\lib\libQt5Widgetsd.a C:\Qt\5.12.1\mingw73_64\lib\libQt5Guid.a C:\Qt\5.12.1\mingw73_64\lib\libQt5Networkd.a C:\Qt\5.12.1\mingw73_64\lib\libQt5Cored.a  -lmingw32 C:\Qt\5.12.1\mingw73_64\lib\libqtmaind.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-winx64\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 -LC:\Qt\5.12.1\mingw73_64\lib C:\Qt\5.12.1\mingw73_64\lib\libQt5Cored.a 
+LIBS        =        -lcurl -LC:\Qt\5.12.1\mingw73_64\lib C:\Qt\5.12.1\mingw73_64\lib\libQt5Widgetsd.a C:\Qt\5.12.1\mingw73_64\lib\libQt5Guid.a C:\Qt\5.12.1\mingw73_64\lib\libQt5Networkd.a C:\Qt\5.12.1\mingw73_64\lib\libQt5Cored.a  -lmingw32 C:\Qt\5.12.1\mingw73_64\lib\libqtmaind.a -LC:\openssl\lib -LC:\Utils\my_sql\mysql-5.6.11-winx64\lib -LC:\Utils\postgresql\pgsql\lib -lshell32 -LC:\Qt\5.12.1\mingw73_64\lib C:\Qt\5.12.1\mingw73_64\lib\libQt5Cored.a 
 QMAKE         = C:\Qt\5.12.1\mingw73_64\bin\qmake.exe
 IDC           = idc
 IDL           = midl
@@ -581,6 +581,14 @@ debug/mainwindow.o: ../STC-UI/mainwindow.cpp ../STC-UI/mainwindow.h \
 		C:/Qt/5.12.1/mingw73_64/include/QtWidgets/QToolBar \
 		C:/Qt/5.12.1/mingw73_64/include/QtWidgets/qtoolbar.h \
 		C:/Qt/5.12.1/mingw73_64/include/QtWidgets/QWidget \
+		C:/Qt/5.12.1/mingw73_64/include/curl/curl.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/curlver.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/system.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/easy.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/multi.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/urlapi.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/options.h \
+		C:/Qt/5.12.1/mingw73_64/include/curl/typecheck-gcc.h \
 		C:/Qt/5.12.1/mingw73_64/include/QtCore/QtCore \
 		C:/Qt/5.12.1/mingw73_64/include/QtCore/QtCoreDepends \
 		C:/Qt/5.12.1/mingw73_64/include/QtCore/qabstractanimation.h \

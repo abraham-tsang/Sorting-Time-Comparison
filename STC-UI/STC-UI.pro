@@ -34,6 +34,8 @@ HEADERS += \
 FORMS += \
         mainwindow.ui
 
+LIBS += -lcurl
+
 QT += network
 
 # Default rules for deployment.
